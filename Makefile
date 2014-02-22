@@ -17,10 +17,26 @@
  # License along with this program.  If not, see
  # <http://www.gnu.org/licenses/>.
  #
+RELEASE_MODE = 0
+
+ifeq ($(RELEASE_MODE),1)
+        DEFINE_FLAGS= -DRELEASE_MODE
+else
+        DEFINE_FLAGS= -DDEBUG_MODE
+endif
+
+FILES = lib_utils.c \
+	./include/interprete_query.c \
+	./include/interprete_query.tab.c \
+	CommandLine/CommandLine.c 
+	
+COMPILE_FLAGS = -O2 -I include -o interprete -lfl -ly -ll -fopenmp
+	
+
 all:
 	bison -o ./include/interprete_query.tab.c interprete_query.y -yd
 	flex -o ./include/interprete_query.c interprete_query.l
-	gcc -I include -O2 lib_utils.c ./include/interprete_query.c ./include/interprete_query.tab.c -o interprete -lfl -ly -ll -fopenmp
+	gcc $(DEFINE_FLAGS) $(FILES) $(COMPILE_FLAGS)
 	rm ./include/interprete_query.tab.c ./include/interprete_query.tab.h ./include/interprete_query.c
 clean:
 	rm interprete

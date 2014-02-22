@@ -25,6 +25,10 @@
 #include <string.h>
 
 
+/**
+ * initializes a query
+ * @param q the query
+ */
 void inicializa_query(tipo_query *q)
 {
 	int i;

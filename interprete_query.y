@@ -26,6 +26,8 @@
 #include <lib_utils.h>
 #include <assert.h>
 #include <sys/time.h>
+    
+#include "CommandLine/CommandLine.h"
 
 
 
@@ -824,15 +826,18 @@ unsigned int func_nop(void)
 {
 	return 1;
 }
-int main() {
+int main(int argc,char **argv) {
 	
 	int i;
 	struct timeval t0, t1, t; 
 	inicializa_query(&query);
 	inicializa_entrada(&entrada);
 	inicializa_entrada(&resultados);
+        
+        parse_arguments(argc,argv);
+        
 	printf("%s",prompt);
-	while(1)
+	for(;;)
 	{	
 		//printf("aki1");fflush(stdout);
 		//yyrestart();
@@ -858,6 +863,5 @@ int main() {
 		inicializa_entrada(&resultados);
 		printf("%s",prompt);
 	}
-	//while(1)yylex();
 }
 
