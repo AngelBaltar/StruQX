@@ -195,8 +195,8 @@ val_gen:ID
 	|ID ESPS val_gen	{$$.tipo_string=malloc(sizeof(char)*(strlen($1.tipo_string)+strlen($2.tipo_string)+strlen($3.tipo_string)+1));$$.tipo_string[0]=0;strcat($$.tipo_string,$1.tipo_string);strcat($$.tipo_string,$2.tipo_string);strcat($$.tipo_string,$3.tipo_string);}
 	|VAL_TXT ESPS val_gen	{$$.tipo_string=malloc(sizeof(char)*(strlen($1.tipo_string)+strlen($2.tipo_string)+strlen($3.tipo_string)+1));$$.tipo_string[0]=0;strcat($$.tipo_string,$1.tipo_string);strcat($$.tipo_string,$2.tipo_string);strcat($$.tipo_string,$3.tipo_string);}
 ;
-lista_query:lista_query esp_opc query	{printf("\n%s",prompt);}
-	|/*vacio*/
+lista_query:lista_query esp_opc query           {printf("\n%s",prompt);}
+	|/*vacio*/                      /*{printf("\n%s",prompt);}*/
 ;
 query : seleccion ESPS origen clausulas_opc PNT_COMA  {unsigned int i=comprueba_seleccion(&query);
 							if(i!=query.tam_sel)
@@ -206,7 +206,8 @@ query : seleccion ESPS origen clausulas_opc PNT_COMA  {unsigned int i=comprueba_
 								yyerror(cad);
 								return;
 							}
-							flag_func=FUNC_BUSC;return;}
+							flag_func=FUNC_BUSC;
+                                                        return;}
 	|CREATE ESPS PATH_XML esp_opc PAR_IZQ esp_opc
 		ROOT esp_opc ID esp_opc COMA esp_opc NODE esp_opc ID esp_opc COMA esp_opc ATTRIBUTES esp_opc ID lista_atrs PAR_DER PNT_COMA	{printf("aki");
 												inserta_entrada($21.tipo_string,&entrada,T_ESQUEMA);
@@ -518,6 +519,9 @@ unsigned char evalua_condicion_completa(tipo_query *q__,tipo_entrada *ent)
 }
 static tipo_entrada resultados;
 static tipo_entrada res_cartesianos[MAX_DAT];
+/*
+ * Extracts the selected atributs for the entry ent into the results for the actual query
+ */
 void extrae_atributos(tipo_entrada *ent,tipo_entrada *resultado_act)
 {
 	//printf("resultado act :%x\n",resultado_act);fflush(stdout);
@@ -525,18 +529,21 @@ void extrae_atributos(tipo_entrada *ent,tipo_entrada *resultado_act)
 	resultado_act->lista=NULL;	
 	inicializa_entrada(resultado_act);
 	int i,j;
-	#pragma omp for
-	for(i=0;i<query.tam_sel;i++)
-	{
-		//snprintf(cad,MAX_DAT,"%s",query.lista_seleccion[i]);
-		//#pragma omp for
-		for(j=0;j<ent->tam_l-1;j+=2)
-		{
-			if(strcmp(query.lista_seleccion[i],ent->lista[j])==0)
-				inserta_entrada(ent->lista[j+1],resultado_act,T_FILA);	
-		}
-	}
+        for(i=0;i<query.tam_sel;i++)
+        {
+                //snprintf(cad,MAX_DAT,"%s",query.lista_seleccion[i]);
+                //#pragma omp for
+                for(j=0;j<ent->tam_l-1;j+=2)
+                {
+                        if(strcmp(query.lista_seleccion[i],ent->lista[j])==0)
+                                inserta_entrada(ent->lista[j+1],resultado_act,T_FILA);	
+                }
+        }
 }
+
+/*
+ * Processes join file
+ */
 void procesa_fila_cartesiano(tipo_entrada *ent)
 {
 	//printf("PROCESANDO FILA\n");fflush(stdout);imprime_entrada(ent);//imprime_query(&query);
@@ -610,6 +617,10 @@ void procesa_fila_cartesiano(tipo_entrada *ent)
 		//{printf("siiiiiiiiii\n");}		
 	}
 }
+
+/**
+ *Searching process for one row, insert it if condition matches
+ */
 void procesa_fila_busqueda(tipo_entrada *ent)
 {
 
@@ -623,24 +634,17 @@ void procesa_fila_busqueda(tipo_entrada *ent)
 	resultado_act->lista=NULL;	
 	inicializa_entrada(resultado_act);	
 	//imprime_entrada(ent);
-	int i,j;
-	for(i=0;i<query.tam_sel;i++)
-	{
-		//snprintf(cad,MAX_DAT,"%s",query.lista_seleccion[i]);
-		for(j=0;j<ent->tam_l-1;j+=2)
-		{       
-			if(strcmp(query.lista_seleccion[i],ent->lista[j])==0)
-				inserta_entrada(ent->lista[j+1],resultado_act,T_FILA);	
-		}
-	}
-	//if(resultado_act->tam_l==0)
-	//	printf("CERDOOO\n");
-
+	extrae_atributos(ent,resultado_act);
 	//printf("INSERTANDO ENTRADA1\n");fflush(stdout);
 	inserta_lista_entradas(resultado_act,&resultados,query.order);
 	//printf("INSERTANDO ENTRADA2\n");fflush(stdout);
 	//imprime_entrada(resultado_act);
 }
+
+/*
+ * process a row deleting files, insert new file if the condition does not mach
+ * if the condition machs, will not insert so row will be deleted
+ */
 void procesa_fila_borrado(tipo_entrada *ent)
 {
 	if(evalua_condicion_completa(&query,ent))
@@ -657,6 +661,10 @@ void procesa_fila_borrado(tipo_entrada *ent)
 	inserta_fila(&ent_brr);
 	printf("borrado\n");
 }
+
+/*
+ * Searching function for joins
+ */
 unsigned int Busca_cartesiano(void)
 {
 	//printf("busqueda sobre varios documentos no implementada\n");
@@ -693,6 +701,11 @@ unsigned int Busca_cartesiano(void)
 	for(i=0;i<query.tam_fr;i++)
 		elimina_lista_entradas(&res_cartesianos[i]);
 }
+
+/**
+ * 
+ * Main function for Deleting
+ */
 unsigned int Borra(void)
 {
 	printf("borrando\n");
@@ -729,6 +742,10 @@ unsigned int Borra(void)
 
 	//elimina_lista_entradas(&resultados);
 }
+
+/*
+ * Main function for executing searching Querys
+ */
 unsigned int Busca(void)
 {
 	int i;
@@ -770,6 +787,10 @@ unsigned int Busca(void)
 	}
 	elimina_lista_entradas(&resultados);
 }
+
+/*
+ * function for parsing a source file containing StruQX-SQL
+ */
 unsigned int Source(void)
 {
 	static FILE * src_fich;
@@ -785,12 +806,20 @@ unsigned int Source(void)
 		default:{return;}
 	}
 }
+
+/**
+ * function for system call
+ */
 unsigned int sys_call(void)
 {
 	int a;
 	if(entrada.tam_l==1)
 		a=system(entrada.lista[0]);
 }
+
+/*
+ * function for no operation
+ */
 unsigned int func_nop(void)
 {
 	return 1;

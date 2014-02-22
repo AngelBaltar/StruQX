@@ -67,7 +67,6 @@ tag_generico		{men}{id}{may}
 cierre_tag_generico	{men}{cierre}{id}{may}
 
 %%
-
 {select}		{yylval.tipo.tipo_string="select";return SELECT;}
 {where}			{printf("wh\n");yylval.tipo.tipo_string="where";return  WHERE;}
 {create}		{yylval.tipo.tipo_string="create";return  CREATE;}

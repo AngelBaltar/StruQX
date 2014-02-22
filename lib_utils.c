@@ -98,10 +98,14 @@ void inserta_entrada(char *entr,tipo_entrada *e,unsigned short tipo)
 	e->tam_l++;
 	//printf("insertando %s\n",entr);
 	e->lista=malloc(sizeof(char *)*e->tam_l);
-	for(i=1;i<e->tam_l;i++)
+//#pragma omp parallel shared(e,aux) private(i)
+//  {
+//        #pragma omp for
+        for(i=1;i<e->tam_l;i++)
 	{
 		e->lista[i]=aux[i-1];
 	}
+//  }
 	char * entr_aux=malloc(sizeof(char)*(strlen(entr)+1));
 	strcpy(entr_aux,entr);
 	entr_aux[strlen(entr)]=0;
@@ -619,6 +623,12 @@ unsigned int comprueba_seleccion(tipo_query *q)
 	}
 	return q->tam_sel;
 }
+
+/**
+ * Drops the schema and a file xml thats a table drop
+ * @param path_xml
+ * @return 1 if everything ok else 0
+ */
 unsigned int elimina_esquema(char * path_xml)
 {
 	int i=0,j,err=1,count=0;
@@ -650,6 +660,12 @@ unsigned int elimina_esquema(char * path_xml)
 	return 1;
 }
 
+/**
+ * compares two strings as if they are numbers
+ * @param c1 string 1
+ * @param c2 string 2
+ * @return 1 if c1>c2, 0 if c1==c2, -1 if c1<c2
+ */
 int cad_comp(const char *c1,const char *c2)
 {
 	//printf("comparando %s %s\n",c1,c2);
@@ -678,6 +694,12 @@ struct cache_head
 static struct cache_head cache[CACHE_SIZE]={{NULL,NULL},{NULL,NULL},{NULL,NULL}};
 /*FIN DECLARACIÓN DE ESTRUCTURAS PARA MANEJO DE LISTAS*/
 
+/**
+ * Inserts into the resultset head the entry ent in order
+ * @param ent the entry
+ * @param head the result set
+ * @param order the order field number
+ */
 void inserta_lista_entradas_orden(tipo_entrada *ent, tipo_entrada *head,unsigned int order)
 {
 	if(order>=ent->tam_l)
@@ -728,6 +750,12 @@ void inserta_lista_entradas_orden(tipo_entrada *ent, tipo_entrada *head,unsigned
 	}
 }
 
+/**
+ * Inserts into the resultset head the entry ent
+ * @param ent the entry to insert
+ * @param head the result set
+ * @param order the number of the field wich is ordered by
+ */
 void inserta_lista_entradas(tipo_entrada *ent, tipo_entrada *head,unsigned int order)
 {
 	//printf("INSERTANDO ENTRADA1\n");fflush(stdout);
@@ -773,6 +801,11 @@ void inserta_lista_entradas(tipo_entrada *ent, tipo_entrada *head,unsigned int o
 	}*/
 		
 }
+
+/*
+ * Frees a resultset
+ *  
+*/
 void elimina_lista_entradas(tipo_entrada *head)
 {
 	int i;
@@ -793,6 +826,12 @@ void elimina_lista_entradas(tipo_entrada *head)
 		free(liberar);
 	}
 }
+
+/**
+ * Prints the query result
+ * @param head the result set
+ * @param q the query
+ */
 void imprime_resultado_query(tipo_entrada *head,tipo_query *q)
 {
 	
