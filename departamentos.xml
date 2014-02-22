@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<oficina>
+
+	<departamento>
+		<iddep>1</iddep>
+		<localizacion>corunha</localizacion>
+		<nombredep>finanzas</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>2</iddep>
+		<localizacion>corunha</localizacion>
+		<nombredep>desarrollo</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>3</iddep>
+		<localizacion>lugo</localizacion>
+		<nombredep>marketing</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>4</iddep>
+		<localizacion>corunha</localizacion>
+		<nombredep>calidad</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>5</iddep>
+		<localizacion>corunha</localizacion>
+		<nombredep>atencion al cliente</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>6</iddep>
+		<localizacion>Madrid</localizacion>
+		<nombredep>Direccion</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>7</iddep>
+		<localizacion>Orense</localizacion>
+		<nombredep>logistica</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>8</iddep>
+		<localizacion>corunha</localizacion>
+		<nombredep>recursos humanos</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>9</iddep>
+		<localizacion>Orense</localizacion>
+		<nombredep>Informatica</nombredep>
+	</departamento>
+
+	<departamento>
+		<iddep>10</iddep>
+		<localizacion>Santiago</localizacion>
+		<nombredep>Mantenimiento</nombredep>
+	</departamento>
+</oficina>

@@ -1,0 +1,17 @@
+9
+empleados.xml
+oficina
+empleado
+idemp
+dept
+puesto
+edad
+sal
+nombre
+6
+departamentos.xml
+oficina
+departamento
+iddep
+localizacion
+nombredep
