@@ -21,7 +21,7 @@
 #include <getopt.h>
 #include "CommandLine/CommandLine.h"
 #include "StruQXErrorCodes.h"
-#include "StruQXDebug.h"
+#include "Debug/StruQXDebug.h"
 
 
 static struct option long_options[] =
@@ -76,9 +76,11 @@ void parse_arguments(int argc, char **argv)
 			break;
 #ifdef DEBUG_MODE
 		case 'd':
-                        printf("DEBUG MODE WILL BE SETTED\n");
 			//set debug on
                         enable_debug();
+                        DEBUG(
+                                printf("DEBUG MODE IS SETTED\n");
+                                )
 			break;
 #endif
 		case '?':

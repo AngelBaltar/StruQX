@@ -21,14 +21,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <interprete_query.tab.h>
-#include <tipos_basicos.h>
-#include <lib_utils.h>
 #include <assert.h>
 #include <sys/time.h>
-    
-#include "CommandLine/CommandLine.h"
 
+#include "interprete_query.tab.h"
+#include "tipos_basicos.h"
+#include "lib_utils.h"
+#include "CommandLine/CommandLine.h"
+#include "Debug/StruQXDebug.h"
 
 
 tipo_query query;
@@ -55,7 +55,7 @@ static char cad_error[MAX_DAT];
 unsigned char flag_func=FUNC_NONE;
 char path_busqueda[MAX_DAT];
 
-const char *prompt="BD_XML>";
+const char *prompt="StruQX>";
 
 void (*operacion_registro)(tipo_entrada *ent);
 void inserta_entrada(char *entr,tipo_entrada *e,unsigned short tipo);
@@ -321,22 +321,33 @@ general_error:error	{snprintf(cad_error,MAX_DAT,"no se reconoce %s en este punto
 %%
 
 
-
+/*
+ *inserts one row into the file, all its specified in the entry e
+ */
 void inserta_fila(tipo_entrada *e)
 {
 	int i;
-	printf("aki1111\n");fflush(stdout);
+	DEBUG(
+                printf("inserting row into %s\n",e->lista[0]);fflush(stdout);
+                );
 	FILE *f_xml=fopen(e->lista[0],"r+b");
-
+        if(!f_xml){
+            printf("can not insert into %s no such file\n",e->lista[0]);
+            return;
+        }
 	tipo_entrada t;
 	t.lista=NULL;
 	inicializa_entrada(&t);
 	t.tam_l=0;	
 	if(lee_esquema(e->lista[0],&t)==0){printf("no existe %s\n",e->lista[0]);return;}
-	imprime_entrada(&t);
+	DEBUG(
+                imprime_entrada(&t);
+        );
+        //SEEK TO THE END OF THE FILE SUBSTRACTING THE LAST CLOSE TAG
 	i=fseek(f_xml,(long)(strlen(t.lista[t.tam_l-2])+3)*(-1),SEEK_END);
 	//printf("posicionando final + %i %s\n",(long)(strlen(t.lista[t.tam_l-2])+3)*(-1),t.lista[t.tam_l-2]);
-	fprintf(f_xml,"\n\t<%s>\n",t.lista[t.tam_l-1-2]);	
+	
+        fprintf(f_xml,"\n\t<%s>\n",t.lista[t.tam_l-1-2]);	
 	for(i=1;i<e->tam_l-1;i+=2)
 		fprintf(f_xml,"\t\t<%s>%s</%s>\n",e->lista[i+1],e->lista[i],e->lista[i+1]);
 	fprintf(f_xml,"\t</%s>\n</%s>",t.lista[t.tam_l-1-2],t.lista[t.tam_l-1-1]);	
@@ -548,8 +559,13 @@ void extrae_atributos(tipo_entrada *ent,tipo_entrada *resultado_act)
  */
 void procesa_fila_cartesiano(tipo_entrada *ent)
 {
+        //RES CARTESIANOS CONTAINS RESULTS FOR FROM N IN POSITION N OF THE ARRAY
+        //THE N POSITION CONTAINS DE JOIN WITH 0 TO N position, SO THE LAST
+        //POSITION CONTAINS THE TOTAL JOIN, AND AT THAT TIME WE CAN EVALUATE THE
+        //CONDITION FOR THE QUERY
 	//printf("PROCESANDO FILA\n");fflush(stdout);imprime_entrada(ent);//imprime_query(&query);
-	static unsigned char list_act=0;
+	
+        static unsigned char list_act=0;
 	static char ultimo_path[MAX_DAT];
 	if(strcmp(path_busqueda,query.lista_from[0])==0)
 		list_act=0;
@@ -659,9 +675,12 @@ void procesa_fila_borrado(tipo_entrada *ent)
 	for(i=0;i<ent->tam_l;i++)
 		inserta_entrada(ent->lista[i],&ent_brr,T_FILA);
 	inserta_entrada(path_busqueda,&ent_brr,T_FILA);			
-	imprime_entrada(&ent_brr);
+	
 	inserta_fila(&ent_brr);
-	printf("borrado\n");
+	DEBUG(
+                imprime_entrada(&ent_brr);
+                printf("no borrado\n");
+        );
 }
 
 /*
@@ -710,31 +729,38 @@ unsigned int Busca_cartesiano(void)
  */
 unsigned int Borra(void)
 {
-	printf("borrando\n");
+	DEBUG(
+                printf("borrando\n");
+        );
 	imprime_query(&query);
 	int renameFile=rename(query.lista_from[0],"auxiliar.xml");
 	if(renameFile)
-		{printf("error renombrando el fichero\n");return;}
+		{printf("error renaming %s \n",query.lista_from[0]);return;}
 	FILE  *xml_fich=fopen("auxiliar.xml","r");
 	if(xml_fich==NULL)
-		{printf("error abriendo el fichero\n");return;}
+		{printf("error opening the file auxiliar.xml\n");return;}
 	operacion_registro=procesa_fila_borrado;
 	snprintf(path_busqueda,MAX_DAT,"%s",query.lista_from[0]);
 	
+        //IT NECESARY TO INSERT NEW SCHEMA FOR THE TABLE
+        //BECAUSE DELETE IS IMPLEMENTED AS RENAME AND REINSERT NON DELETEDS
 	tipo_entrada entr_sch;
 	entr_sch.tam_l=0;entr_sch.lista=NULL;
 	inicializa_entrada(&entr_sch);
-	tipo_entrada entr_sch1;
-	entr_sch1.tam_l=0;entr_sch1.lista=NULL;
-	
-	int i;
 	lee_esquema(query.lista_from[0],&entr_sch);
-	for(i=0;i<entr_sch.tam_l;i++)
-		inserta_entrada(entr_sch.lista[i],&entr_sch1,T_ESQUEMA);		
 
-	//imprime_entrada(&entr_sch1);
-	inserta_esquema(&entr_sch1);
-	//return;
+	DEBUG(
+                imprime_entrada(&entr_sch);
+        );
+        
+        //LETS CREATE NEW XML FILE REMEBER WE RENAMED THE OLDER
+        DEBUG(printf("creating file %s\n",entr_sch.lista[entr_sch.tam_l-1]));
+        FILE *new_xml=fopen(entr_sch.lista[entr_sch.tam_l-1],"w");
+	fprintf(new_xml,"<?xml version=\"1.0\"?>\n");
+	fprintf(new_xml,"<%s>\n</%s>",entr_sch.lista[entr_sch.tam_l-2],entr_sch.lista[entr_sch.tam_l-2]);
+	fclose(new_xml);
+	
+ //       return;
 	yyrestart(xml_fich);
 	inicializa_entrada(&entrada);
 	yyparse();

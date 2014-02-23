@@ -28,7 +28,8 @@ endif
 FILES = lib_utils.c \
 	./include/interprete_query.c \
 	./include/interprete_query.tab.c \
-	CommandLine/CommandLine.c 
+	CommandLine/CommandLine.c \
+	Debug/StruQXDebug.c
 	
 COMPILE_FLAGS = -O2 -I include -o interprete -lfl -ly -ll -fopenmp
 	
