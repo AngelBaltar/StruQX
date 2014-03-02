@@ -1,5 +1,5 @@
 /* StruQX - SQL XML DATABASE
- * CommandLine.h
+ * HelpPrinter.h
  * Copyright (C)  Angel Baltar Diaz
  *
  * This program is free software: you can redistribute it and/or
@@ -16,30 +16,46 @@
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-
 /* 
- * File:   CommandLine.h
+ * File:   HelpPrinter.h
  * Author: angel
  *
- * Created on 22 de febrero de 2014, 20:01
+ * Created on 2 de marzo de 2014, 12:36
  */
 
-#ifndef COMMANDLINE_H
-#define	COMMANDLINE_H
+#ifndef HELPPRINTER_H
+#define	HELPPRINTER_H
 
 #ifdef	__cplusplus
 extern "C" {
-#endif
-    
-#include <getopt.h>
+#endif    
 
-void parse_arguments(int argc, char **argv);
-struct option* getCommandLineOptions(void);
-char ** getCommandLineDescriptions(void);
+//SINTAX ERRORS HELP BEGIN
+void general_help(void);
+void cond_help(void);
+void from_help(void);
+void select_help(void);
+void create_help(void);
+void insert_help(void);
+void delete_help(void);
+void drop_help(void);
+void source_help(void);
+void system_help(void);
+void order_help(void);
+void bypage_help(void);
+void xml_help(void);
+//SINTAX ERRORS HELP END
+
+//COMMAND LINE BEGIN
+void print_command_line_help(void);
+void print_version();
+//COMMAND LINE END
+
+
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif	/* COMMANDLINE_H */
+#endif	/* HELPPRINTER_H */
 

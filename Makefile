@@ -29,18 +29,20 @@ FILES = lib_utils.c \
 	./include/interprete_query.c \
 	./include/interprete_query.tab.c \
 	CommandLine/CommandLine.c \
-	Debug/StruQXDebug.c
+	Debug/StruQXDebug.c \
+	MessagePrinters/HelpPrinter.c
 	
-COMPILE_FLAGS = -O2 -I include -o interprete -lfl -ly -ll -fopenmp
+COMPILE_FLAGS = -O2 -I include -o StruQX -lfl -ly -ll -fopenmp
 	
 
 all:
-	bison -o ./include/interprete_query.tab.c interprete_query.y -yd
-	flex -o ./include/interprete_query.c interprete_query.l
-	gcc $(DEFINE_FLAGS) $(FILES) $(COMPILE_FLAGS)
-	rm ./include/interprete_query.tab.c ./include/interprete_query.tab.h ./include/interprete_query.c
+	@echo COMPILING MODE: $(DEFINE_FLAGS)
+	@bison -o ./include/interprete_query.tab.c interprete_query.y -yd
+	@flex -o ./include/interprete_query.c interprete_query.l
+	@gcc $(DEFINE_FLAGS) $(FILES) $(COMPILE_FLAGS)
+	@rm ./include/interprete_query.tab.c ./include/interprete_query.tab.h ./include/interprete_query.c
 clean:
-	rm interprete
+	@rm StruQX
 
 run:
-	./interprete
+	./StruQX

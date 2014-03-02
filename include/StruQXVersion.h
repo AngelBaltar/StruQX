@@ -1,6 +1,6 @@
 /* StruQX - SQL XML DATABASE
- * CommandLine.h
- * Copyright (C)  Angel Baltar Diaz
+ * StruQXVersion.h
+ * Copyright (C) Angel Baltar Diaz
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -16,30 +16,27 @@
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-
 /* 
- * File:   CommandLine.h
+ * File:   StruQXVersion.h
  * Author: angel
  *
- * Created on 22 de febrero de 2014, 20:01
+ * Created on 2 de marzo de 2014, 13:31
  */
 
-#ifndef COMMANDLINE_H
-#define	COMMANDLINE_H
+#ifndef STRUQXVERSION_H
+#define	STRUQXVERSION_H
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    
-#include <getopt.h>
 
-void parse_arguments(int argc, char **argv);
-struct option* getCommandLineOptions(void);
-char ** getCommandLineDescriptions(void);
+#define VERSION_NUMBER "0.0.1"
+#pragma message "Compiling StruQX version 0.0.1"
+
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif	/* COMMANDLINE_H */
+#endif	/* STRUQXVERSION_H */
 

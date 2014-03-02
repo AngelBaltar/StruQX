@@ -45,12 +45,22 @@ void disable_debug();
  */
 unsigned char is_debug_enabled();
 
-#define DEBUG(statements) \
+#ifdef DEBUG_MODE
+        #define DEBUG(statements) \
         do{\
-                if(is_debug_enabled()){\
-                        statements;\
-                }\
+            if(is_debug_enabled()){\
+                    statements;\
+            }\
         }while(0);
+
+#else
+        #define DEBUG(statements) \
+        do{\
+                ;\
+        }while(0);
+#endif
+
+
 
 
 #ifdef	__cplusplus

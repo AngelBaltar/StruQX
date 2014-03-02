@@ -64,29 +64,6 @@ extern void exit_error(char* e);
 #define ATRIB	4
 extern unsigned int comprueba_esquema(char * path,unsigned short tipo,char * texto);
 extern unsigned int comprueba_seleccion(tipo_query *q);
-extern void general_help(void);
-extern void cond_help(void);
-extern void from_help(void);
-extern void select_help(void);
-extern void create_help(void);
-extern void insert_help(void);
-extern void delete_help(void);
-extern void drop_help(void);
-extern void source_help(void);
-extern void system_help(void);
-extern void order_help(void);
-extern void bypage_help(void);
-extern void xml_help(void);
-//----------------------------------------------------------------------------------
-
-//-----------------DEFINICIONES PARA IMPRIMIR CON COLORES ETC-----------------------
-#define RESET_TERM "\033[0m"
-#define	ROJO_NEGRO "\033[40;31m"
-#define NEGRITA	"\033[1m"
-#define AMARILLO_NEGRO "\033[40;33m"
-#define AMARILLO	"\033[33m"
-#define SUBRAYADO	"\033[4m"
-#define PARPADEO	"\033[5m"
 //----------------------------------------------------------------------------------
 
 #endif

@@ -18,10 +18,10 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include <getopt.h>
 #include "CommandLine/CommandLine.h"
 #include "StruQXErrorCodes.h"
 #include "Debug/StruQXDebug.h"
+#include "MessagePrinters/HelpPrinter.h"
 
 
 static struct option long_options[] =
@@ -34,6 +34,39 @@ static struct option long_options[] =
 		{0, 0, 0, 0}
 };
 
+static char* command_line_descs['z'];
+
+/**
+ * initializes the command line options descriptions
+ */
+void init_command_descriptions(void)
+{
+#ifdef DEBUG_MODE
+     command_line_descs['d']="Set the debug mode to execute code into DEBUG macro.";
+#endif
+     command_line_descs['v']="Show the version of the programm.";
+     command_line_descs['h']="Print the general command line help.";
+}
+
+/**
+ * 
+ * @return the defined command line options 
+ */
+struct option* getCommandLineOptions(void)
+{
+    return long_options;
+}
+
+/**
+ * 
+ * @return the descriptions for the command line options 
+ */
+char ** getCommandLineDescriptions(void)
+{
+    return command_line_descs;
+}
+
+
 /**
  * parses command line arguments
  * @param argc argc from the commandline
@@ -41,9 +74,11 @@ static struct option long_options[] =
  */
 void parse_arguments(int argc, char **argv)
 {
+       
 	int c;
         const char* opts="hvd";
-	for(;;){
+	init_command_descriptions();
+        for(;;){
 
 		int option_index = 0;
 		c = getopt_long (argc, argv,opts,long_options, &option_index);
@@ -67,11 +102,11 @@ void parse_arguments(int argc, char **argv)
 			printf ("\n");
 			break;
 		case 'h':
-//			print_help();
-			exit(0);
+			print_command_line_help();
+			exit(SUCCESS_CODE);
 			break;
 		case 'v':
-//			version_printer();
+                        print_version();
 			exit(SUCCESS_CODE);
 			break;
 #ifdef DEBUG_MODE
@@ -84,20 +119,18 @@ void parse_arguments(int argc, char **argv)
 			break;
 #endif
 		case '?':
-//			print_help();
+			print_command_line_help();
 			/* getopt_long already printed an error message. */
 			exit(ERR_CMD_ARGUMENTS_ERROR);
 			break;
 
 		default:
-//			print_help();
+			print_command_line_help();
 			exit(SUCCESS_CODE);
 		}
 	}
 	if(optind+1<argc) //More than one input file
 	{
-		printf("Parallware can only process one file at once\n");
-
 		exit(ERR_CMD_ARGUMENTS_ERROR);
 	}
 }

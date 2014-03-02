@@ -29,6 +29,7 @@
 #include "lib_utils.h"
 #include "CommandLine/CommandLine.h"
 #include "Debug/StruQXDebug.h"
+#include "MessagePrinters/HelpPrinter.h"
 
 
 tipo_query query;

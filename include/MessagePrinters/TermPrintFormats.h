@@ -1,6 +1,6 @@
 /* StruQX - SQL XML DATABASE
- * CommandLine.h
- * Copyright (C)  Angel Baltar Diaz
+ * TermPrintFormats.h
+ * Copyright (C) Angel Baltar Diaz
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -16,30 +16,34 @@
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-
 /* 
- * File:   CommandLine.h
+ * File:   TermPrintFormats.h
  * Author: angel
  *
- * Created on 22 de febrero de 2014, 20:01
+ * Created on 2 de marzo de 2014, 12:52
  */
 
-#ifndef COMMANDLINE_H
-#define	COMMANDLINE_H
+#ifndef TERMPRINTFORMATS_H
+#define	TERMPRINTFORMATS_H
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    
-#include <getopt.h>
 
-void parse_arguments(int argc, char **argv);
-struct option* getCommandLineOptions(void);
-char ** getCommandLineDescriptions(void);
+//-----------------DEFINITIONS TO PRINT IN COLOR--------------------------------
+#define RESET_TERM "\033[0m"
+#define	ROJO_NEGRO "\033[40;31m"
+#define NEGRITA	"\033[1m"
+#define AMARILLO_NEGRO "\033[40;33m"
+#define AMARILLO	"\033[33m"
+#define SUBRAYADO	"\033[4m"
+#define PARPADEO	"\033[5m"
+//------------------------------------------------------------------------------    
+
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif	/* COMMANDLINE_H */
+#endif	/* TERMPRINTFORMATS_H */
 
