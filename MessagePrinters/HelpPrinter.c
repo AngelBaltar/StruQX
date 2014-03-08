@@ -32,11 +32,11 @@ void general_help(void)
 {
         return;
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("\nHA OCURRIDO UN ERROR DEL QUE NO HAY INFORMACIÓN ESPECÍFICA!\n");
+        printf("\nTHIS IS AN ERROR WITH NO SPECIFIC INFORMATION, SORRY!\n");
         printf("%s",AMARILLO_NEGRO);
         printf("--------------------------\n");
-        printf("|BASE DE DATOS XML       |\n");
-        printf("|AUTOR: Angel Baltar Diaz|\n");
+        printf("|StruQX       |\n");
+        printf("|AUTHOR: Angel Baltar Diaz|\n");
         printf("-------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
@@ -49,19 +49,19 @@ void general_help(void)
 void cond_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA CONDICION\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A CONDITION\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LAS CONDICIONES----------------------------------\n");
-        printf("|	   (literal o id) > (literal o id)						|\n");
-        printf("|	   (literal o id) < (literal o id)						|\n");
-        printf("|	   (literal o id) >= (literal o id)						|\n");
-        printf("|	   (literal o id) <= (literal o id)						|\n");
-        printf("|	   (literal o id) == (literal o id)						|\n");
-        printf("|	   (literal o id) != (literal o id)						|\n");
-        printf("|	   (condicion rodeada por parentesis)						|\n");
-        printf("|	  	    !condicion								|\n");
-        printf("|	   (condicion || condicion )   Los parentesis la expresion OR son obligatorios	|\n");				
-        printf("|	   (condicion && condicion )   Los parentesis las expresion AND son obligatorios|\n");
+        printf(" --------------------------CONDITION SINTAX----------------------------------                   \n");
+        printf("|	   (literal or id) > (literal or id)                                                    |\n");
+        printf("|	   (literal or id) < (literal or id)                                                    |\n");
+        printf("|	   (literal or id) >= (literal or id)                                                   |\n");
+        printf("|	   (literal or id) <= (literal or id)                                                   |\n");
+        printf("|	   (literal or id) == (literal or id)                                                   |\n");
+        printf("|	   (literal or id) != (literal or id)                                                   |\n");
+        printf("|	   (condition between parenthesis)                                                      |\n");
+        printf("|	  	    !condition                                                                  |\n");
+        printf("|	   (condition || condition )   The parenthesis in the OR expression are mandatory 	|\n");				
+        printf("|	   (condition && condition )   The parenthesis in the AND expression are mandatory      |\n");
         printf(" ---------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
@@ -73,13 +73,13 @@ void cond_help(void)
 void from_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA CLAUSULA FROM\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A FROM CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA CLAUSULA FROM----------------------------------\n");
-        printf("|	   FROM archivo_tabla1.xml,archivo_tabla2.xml,...,archivo_tablaN.xml		|\n");
-        printf("|	   La palabra reservada from puede ir en minusculas, mayusculas o combinaciones	|\n");
-        printf("|	   Los archivos de tablas deben estar en la misma carpeta donde se ejecuta	|\n");
-        printf("|	   la base de datos XML o ser paths absolutos hasta ellos			|\n");
+        printf(" --------------------------FROM CLAUSE SINTAX-------------------------------------------\n");
+        printf("|	   FROM file_table1.xml,file_table2.xml,...,file_tableN.xml                     |\n");
+        printf("|	   The reserved word FROM is not case sensitive                                 |\n");
+        printf("|	   The files for the tables need to be in the actual execution directory        |\n");
+        printf("|	   it will work too if they are absolute paths                  		|\n");
         printf(" ---------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
@@ -92,15 +92,13 @@ void from_help(void)
 void select_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA CLAUSULA SELECT\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A SELECT CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA CLAUSULA SELECT----------------------------------\n");
-        printf("|	   SELECT Id1,Id2,...,IdN (Para seleccionar los ids especificados)		 |\n");
-        printf("|	   SELECT *		  (Para seleccionar todos los atributos de la tabla)	 |\n");
-        printf("|	   La palabra reservada select puede ir en minusculas, mayusculas o combinaciones|\n");
-        printf("|	   Los atributos deben tener su correspondencia en las tablas que se indiquen en |\n");
-        printf("|	   la clausula from.								 |\n");
-        printf("|	   Para los ids se recomienda usar nombres cortos en minusculas			 |\n");
+        printf(" --------------------------SELECT CLAUSE SINTAX------------------------------------------\n");
+        printf("|	   SELECT Id1,Id2,...,IdN (To Select the specified ids)         		 |\n");
+        printf("|	   SELECT *		  (To Select all the ids from the table)                 |\n");
+        printf("|	   The reserved word SELECT is not case sensitive                                |\n");
+        printf("|	   The ids need to exist in the from clause specified tables                     |\n");
         printf(" ---------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
@@ -113,14 +111,14 @@ void select_help(void)
 void create_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA CLAUSULA CREATE\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A CREATE CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA CLAUSULA CREATE-------------------------------------------\n");
-        printf("|	  CREATE archivo.xml(root=IdtagRaiz,node=IdtagNodo,attributes=IdAttr1,IdAttr2,...,IdAttrN); |\n");
-        printf("|	  Las palabras reservadas CREATE root, node y attributes pueden ir en mayusculas,	    |\n");
-        printf("|	  minusculas o combinaciones, pero root, node y attributes deben ir seguidos del = sin      |\n");
-        printf("|	  sin espacio alguno, se recomienda que los ID (IdtagRaiz, IdtagNodo, y los id de atributos)|\n");
-        printf("|	  sean palabras cortas en minusculas. archivo.xml será la ruta completa al archivo a crear  |\n");
+        printf(" --------------------------CREATE CLAUSE SINTAX-----------------------------------------------------\n");
+        printf("|	  CREATE file.xml(root=IdRootTag,node=IdNodeTag,attributes=IdAttr1,IdAttr2,...,IdAttrN);    |\n");
+        printf("|	  The reserved words CREATE root, node and attributes are not case sensitive,               |\n");
+        printf("|	  but root, node and attributes should be followed by = without any space between them      |\n");
+        printf("|	  it's recommended  the IDs (IdtagRaiz, IdtagNodo, and the attribute IDs)                   |\n");
+        printf("|	  to be short words. file.xml is the path to the file that will contain the table           |\n");
         printf(" ---------------------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
@@ -132,13 +130,12 @@ void create_help(void)
 void insert_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA SENTENCIA INSERT\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A INSERT CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA SENTENCIA INSERT-------------------------------------------\n");
-        printf("|	  INSERT archivo.xml (IdAttr1=\"literal1\",IdAttr2=\"literal2\",...,IdAttrN=\"literalN\",); |\n");
-        printf("|	  La palabra reservada INSERT puede ir en mayusculas, minusculas o combinaciones	    |\n");
-        printf("|	  archivo.xml será la ruta completa a la localización del archivo de la tabla		    |\n");
-        printf("|	  se recomienda que los ID sean palabras cortas en minusculas				    |\n");
+        printf(" --------------------------INSERT SINTAX CLAUSE-----------------------------------------------------\n");
+        printf("|	  INSERT file.xml (IdAttr1=\"literal1\",IdAttr2=\"literal2\",...,IdAttrN=\"literalN\",);    |\n");
+        printf("|	  The reserved workd INSERT is not case sensitive                                           |\n");
+        printf("|	  file.xml is the full path to the table file location                          	    |\n");
         printf(" ---------------------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
@@ -150,13 +147,13 @@ void insert_help(void)
 void delete_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA SENTENCIA DELETE\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A DELETE CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA SENTENCIA DELETE-------------------------------------------\n");
-        printf("|	  DELETE FROM archivo.xml WHERE condicion;					   	    |\n");
-        printf("|	  La palabra reservada DELETE puede ir en mayusculas, minusculas o combinaciones	    |\n");
-        printf("|	  archivo.xml será la ruta completa a la localización del archivo de la tabla		    |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------DELETE CLAUSE SINTAX------------------\n");
+        printf("|	  DELETE FROM file.xml WHERE condition;                  |\n");
+        printf("|	  The reserved word DELETE is not case sensitive         |\n");
+        printf("|	  file.xml is the full path to the table file location   |\n");
+        printf(" ----------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }
@@ -167,13 +164,13 @@ void delete_help(void)
 void drop_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA SENTENCIA DROP\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A DROP CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA SENTENCIA DROP---------------------------------------------\n");
-        printf("|	  DROP archivo.xml;					   	  			    |\n");
-        printf("|	  La palabra reservada DROP puede ir en mayusculas, minusculas o combinaciones	   	    |\n");
-        printf("|	  archivo.xml será la ruta completa a la localización del archivo de la tabla		    |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------DROP CLAUSE SINTAX-----------------------\n");
+        printf("|	  DROP file.xml;                                            |\n");
+        printf("|	  The reserved word DROP is not case sensitive	   	    |\n");
+        printf("|	  file.xml is the full path to the table file location      |\n");
+        printf(" -------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }
