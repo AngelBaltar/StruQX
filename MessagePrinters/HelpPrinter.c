@@ -181,16 +181,15 @@ void drop_help(void)
 void source_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA SENTENCIA SOURCE\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A SOURCE CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA SENTENCIA SOURCE-------------------------------------------\n");
-        printf("|	  SOURCE archivo_texto;					   	  			    |\n");
-        printf("|	  La palabra reservada SOURCE puede ir en mayusculas, minusculas o combinaciones	    |\n");
-        printf("|	  archivo_texto será la ruta completa a la localización del archivo de script sql	    |\n");
-        printf("|	  El archivo de texto deberá contener sentencias sql interpretables por este programa	    |\n");
-        printf("|	  Una vez ejecutadas dichas sentencias debe usarse el comando exit source;	    	    |\n");
-        printf("|	  Para salir del modo source (ejecución desde archivo de script)	 		    |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------SOURCE CLAUSE SINTAX---------------------------------------------\n");
+        printf("|	  SOURCE file;					   	  			    |\n");
+        printf("|	  The reserved word SOURCE is not case sensitive                                    |\n");
+        printf("|	  file is the full path to a file containing valid StruQX SQL querys                |\n");
+        printf("|	  If you want to exit StruQX after the execution of the file just put an exit;      |\n");
+        printf("|	  at the end of the file. If you want only to exit source mode just put exit source |\n");
+        printf(" -------------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }
@@ -201,15 +200,14 @@ void source_help(void)
 void system_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA SENTENCIA SYSTEM\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A SYSTEM CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA SENTENCIA SYSTEM-------------------------------------------\n");
-        printf("|	  SYSTEM \"comando al sistema\";					   	  	    |\n");
-        printf("|	  La palabra reservada SYSTEM puede ir en mayusculas, minusculas o combinaciones	    |\n");
-        printf("|	  comando al sistema debe ir entrecomillado ya que para el programa es un literal,	    |\n");
-        printf("|	  una simple cadena de texto que se pasará al sistema, debe por tanto ser un comando	    |\n");
-        printf("|	  válido en el sistema								    	    |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------SYSTEM CLAUSE SYNTAX--------------------------------------\n");
+        printf("|	  SYSTEM \"command to the system\";                                          |\n");
+        printf("|	  The reserved word SYSTEM is not case sensitive                             |\n");
+        printf("|	  the command to the system should appear between \" because it is a literal |\n");
+        printf("|	  the command to the system should be a valid command in the system	     |\n");
+        printf(" -------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }
@@ -219,14 +217,13 @@ void system_help(void)
 void order_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA CLAUSULA ORDER\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A ORDER CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA CLAUSULA ORDER-------------------------------------------\n");
-        printf("|	  ORDER BY id					   	  	    |\n");
-        printf("|	  Las palabras reservadas ORDER y BY pueden ir en mayusculas, minusculas o combinaciones    |\n");
-        printf("|	  id deberá ser uno de los identificadores seleccionados en la consultao o en caso de	    |\n");
-        printf("|	  seleccionar *, deberá ser uno de los identificadores disponibles			    |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------ORDER CLAUSE SYNTAX----------------------------------\n");
+        printf("|	  ORDER BY id                                                           |\n");
+        printf("|	  The words ORDER and BY are not case sensitive                         |\n");
+        printf("|	  id should be one of the available attributes (a selected attribute)	|\n");
+        printf(" -------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }
@@ -237,13 +234,13 @@ void order_help(void)
 void bypage_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UNA CLAUSULA BY PAGE\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A BY PAGE CLAUSE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------SINTAXIS DE LA CLAUSULA BY PAGE-------------------------------------------\n");
-        printf("|	  BY PAGE;					   	  	    |\n");
-        printf("|	  Las palabras reservadas BY y PAGE pueden ir en mayusculas, minusculas o combinaciones	    |\n");
-        printf("|	  Está cláusula debe indicarse al final de la consulta.				    	    |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------BY PAGE CLAUSE SYNTAX----------------------------------------\n");
+        printf("|	  BY PAGE;                                                                      |\n");
+        printf("|	  The reserved words BY and PAGE are not case sensitive                         |\n");
+        printf("|	  The clause should appear at the end of the query or do not appear at all.     |\n");
+        printf(" ---------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }
@@ -254,14 +251,13 @@ void bypage_help(void)
 void xml_help(void)
 {
         printf("%s%s",ROJO_NEGRO,NEGRITA);
-        printf("PARECE QUE HA HABIDO UN ERROR PARSEANDO UN ARCHIVO XML\n");
+        printf("IT SEMS TO BE A PROBLEM PARSING A XML FILE\n");
         printf("%s",AMARILLO_NEGRO);
-        printf(" --------------------------ERROR ARCHIVO XML-------------------------------------------------\n");
-        printf("|	 Este error es debido a que el archivo xml está mal formado, o está en un formato    |\n");
-        printf("|	 que no coincide con lo que el programa esperaba según fue definida la tabla   	     |\n");
-        printf("|	 soportada por dicho archivo, compruebe el archivo xml buscando el error del que se  |\n");
-        printf("|	 ha informado y corrijalo si es posible						     |\n");
-        printf(" ---------------------------------------------------------------------------------------------------");
+        printf(" --------------------------XML FILE ERROR---------------------------------------------\n");
+        printf("|	 This error is because the xml file is not well formed, is in a unexpected    |\n");
+        printf("|	 format, or the format doesn't match with the table format                    |\n");
+        printf("|	 check the xml file and fix the error, please                                 |\n");
+        printf(" -------------------------------------------------------------------------------------");
         printf("%s",RESET_TERM);
         printf("\n");
 }

@@ -29,9 +29,14 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+    
+/* definition to expand macro then apply to pragma message */
+#define VALUE_TO_STRING(x) #x
+#define VALUE(x) VALUE_TO_STRING(x)
+#define VAR_NAME_VALUE(var) #var "="  VALUE(var)
 
 #define VERSION_NUMBER "0.0.1"
-#pragma message "Compiling StruQX version 0.0.1"
+#pragma message (VAR_NAME_VALUE(VERSION_NUMBER))
 
 
 #ifdef	__cplusplus
